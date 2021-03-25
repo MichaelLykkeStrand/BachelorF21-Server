@@ -40,14 +40,20 @@ exports.addUserToCourse = async (courseId,userId) => {
 
 exports.removeUserFromCourse = async (courseId, userId) => {
     //TODO
-    return Course.updateOne({id: courseId }, { "$pull": { "Users": { "user": userId } }});
+    let course = await Course.findById(courseId);
+    let user = await UserModel.findById(userId);
+    course.users.pull(user);
+    course.save();
+    return course;
 };
 
+/*
 exports.removeUserFromCourse = async (id) => {
     let result = await Course.findById(id);
     result = result.toJSON();
     return result;
 };
+*/
 
 exports.findById = async (id) => {
     let result = await Course.findById(id);
