@@ -11,12 +11,12 @@ const EVERYONE = config.permissionLevels.EVERYONE;
 exports.routesConfig = function (app) {
 
     //Manage user references
-    app.post('/courses/:courseId/:userId', [
+    app.post('/courses/manage', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
         CoursesController.addUserById
     ]);
-    app.delete('/courses/:courseId/:userId', [
+    app.delete('/courses/manage', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
         CoursesController.removeUserById

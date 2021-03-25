@@ -11,14 +11,14 @@ exports.insert = (req, res) => {
 
 exports.addUserById = (req, res) => {
     //TODO
-    CourseModel.addUserToCourse(req.params.courseId,req.params.userId).then((result)=>{
+    CourseModel.addUserToCourse(req.body.courseId,req.body.userId).then((result)=>{
         res.status(200).send(result);
     });
 };
 
 exports.removeUserById = (req, res) => {
     //TODO
-    CourseModel.removeUserFromCourse(req.params.courseId,req.params.userId).then((result)=>{
+    CourseModel.removeUserFromCourse(req.body.courseId,req.body.userId).then((result)=>{
         res.status(200).send(result);
     });
 };

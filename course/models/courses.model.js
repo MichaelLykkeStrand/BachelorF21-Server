@@ -27,7 +27,7 @@ courseSchema.findById = function (cb) {
 const Course = mongoose.model('Courses', courseSchema);
 
 
-exports.addUserToCourse = async () => {
+exports.addUserToCourse = async (courseId,userId) => {
     //TODO
     let course = await Course.findById(courseId);
     let user = await UserModel.findById(userId);
