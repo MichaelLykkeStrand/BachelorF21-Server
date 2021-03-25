@@ -14,12 +14,14 @@ const CourseRouter = require('./course/routes.config');
 const fs = require('fs');
 const cors = require('cors');
 
+/*
 let server = https.createServer({
     key: fs.readFileSync('localhost.key'),
     cert: fs.readFileSync('localhost.crt')
 }, app);
+*/
 
-server.listen(config.port, () => console.log('app listening at port %s', config.port));
+app.listen(config.port, () => console.log('app listening at port %s', config.port));
 
 app.use(cors());
 app.use(function (req, res, next) {
