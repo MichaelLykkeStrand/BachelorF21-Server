@@ -42,7 +42,7 @@ const User = mongoose.model('Users', userSchema);
 
 //DO NOT USE THIS UNLESS the response is not sent to the client
 exports.findByEmailIncludesPassword = async (email) =>{
-    let result = await User.find({ email: email }).select('password').exec();;
+    let result = await User.find({ email: email }).select('+password').exec();;
     return result;
 }
 
