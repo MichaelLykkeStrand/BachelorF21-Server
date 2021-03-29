@@ -23,6 +23,12 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         UsersController.getById
     ]);
+    app.get('/users/courses/:userId', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+        UsersController.getCoursesById
+    ]);
     app.patch('/users/:userId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),

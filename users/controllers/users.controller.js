@@ -54,3 +54,10 @@ exports.removeById = (req, res) => {
             res.status(204).send({});
         });
 };
+
+exports.getCoursesById = (req, res) => {
+    UserModel.findCoursesById(req.params.userId)
+        .then((result) => {
+            res.status(200).send(result);
+        });
+};

@@ -22,6 +22,10 @@ const userSchema = new Schema({
     permissionLevel: {
         type: Number,
         default: 1
+    },
+    courses: {
+        type: Array,
+        select: false,
     }
 });
 
@@ -42,7 +46,7 @@ const User = mongoose.model('Users', userSchema);
 
 //DO NOT USE THIS UNLESS the response is not sent to the client
 exports.findByEmailIncludesPassword = async (email) =>{
-    let result = await User.find({ email: email }).select('+password').exec();;
+    let result = await User.find({ email: email }).select('+password').exec();
     return result;
 }
 
@@ -54,6 +58,11 @@ exports.findByEmail = async (email) => {
 exports.findById = async (id) => {
     let result = await User.findById(id);
     result = result.toJSON();
+    return result;
+};
+
+exports.findCoursesById = async (id) =>{
+    let result = await User.findById(id).select('courses').exec();
     return result;
 };
 
