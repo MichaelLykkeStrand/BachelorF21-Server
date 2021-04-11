@@ -56,7 +56,7 @@ exports.removeById = (req, res) => {
 };
 
 exports.getCoursesById = (req, res) => {
-    UserModel.findCoursesById(req.params.userId)
+    UserModel.findCoursesById(req.jwt.userId)
         .then((result) => {
             res.status(200).send(result);
         });
