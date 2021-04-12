@@ -13,14 +13,6 @@ const courseSchema = new Schema({
     successors: [{type: Schema.Types.ObjectId, ref:'Courses'}]
 });
 
-courseSchema.virtual('id').get(function () {
-    return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
-courseSchema.set('toJSON', {
-    virtuals: true
-});
 
 courseSchema.findById = function (cb) {
     return this.model('Courses').find({ id: this.id }, cb);
