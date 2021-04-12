@@ -8,7 +8,9 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    users: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+    instructors: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+    students: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+    
     successors: [{type: Schema.Types.ObjectId, ref:'Courses'}]
 });
 
