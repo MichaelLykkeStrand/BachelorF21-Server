@@ -8,7 +8,8 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
+    users: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+    successors: [{type: Schema.Types.ObjectId, ref:'Courses'}]
 });
 
 courseSchema.virtual('id').get(function () {
