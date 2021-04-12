@@ -49,13 +49,6 @@ exports.removeUserFromCourse = async (courseId, userId) => {
     return course;
 };
 
-/*
-exports.removeUserFromCourse = async (id) => {
-    let result = await Course.findById(id);
-    result = result.toJSON();
-    return result;
-};
-*/
 
 exports.findById = async (id) => {
     let result = await Course.findById(id);
@@ -75,7 +68,7 @@ exports.list = async (perPage, page) => {
         Course.find()
             .limit(perPage)
             .skip(perPage * page)
-            .populate('users')
+            .populate('students').populate('instructors')
             .exec(function (err, courses) {
                 if (err) {
                     reject(err);
