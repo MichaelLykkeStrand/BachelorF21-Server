@@ -10,7 +10,8 @@ const courseSchema = new Schema({
     },
     instructors: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
     students: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    successors: [{type: Schema.Types.ObjectId, ref:'Courses'}]
+    successors: [{type: Schema.Types.ObjectId, ref:'Courses'}],
+    tasks: [{type: Schema.Types.ObjectId, ref:'Tasks'}]
 });
 
 
@@ -60,7 +61,7 @@ exports.list = async (perPage, page) => {
         Course.find()
             .limit(perPage)
             .skip(perPage * page)
-            .populate('students').populate('instructors')
+            .populate('students').populate('instructors').populate('tasks')
             .exec(function (err, courses) {
                 if (err) {
                     reject(err);

@@ -1,4 +1,5 @@
 const CoursesController = require('./controllers/courses.controller');
+const TasksController = require('./controllers/tasks.controller');
 const PermissionMiddleware = require('../common/middlewares/auth.permission.middleware');
 const ValidationMiddleware = require('../common/middlewares/auth.validation.middleware');
 const config = require('../common/config/env.config');
@@ -40,7 +41,7 @@ exports.routesConfig = function (app) {
     ]);
     app.patch('/courses/:courseId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         CoursesController.patchById
     ]);
@@ -48,5 +49,13 @@ exports.routesConfig = function (app) {
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         CoursesController.removeById
+    ]);
+
+    //Task
+
+    app.patch('/courses/task/', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        TasksController.patchById    
     ]);
 };
