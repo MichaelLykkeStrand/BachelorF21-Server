@@ -1,5 +1,4 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
-const UserModel = require('../../users/models/users.model');
 
 const Schema = mongoose.Schema;
 
@@ -8,11 +7,17 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    instructors: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    students: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    successors: [{type: Schema.Types.ObjectId, ref:'Courses'}]
+    users: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
 });
 
+courseSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+courseSchema.set('toJSON', {
+    virtuals: true
+});
 
 courseSchema.findById = function (cb) {
     return this.model('Courses').find({ id: this.id }, cb);
@@ -41,6 +46,13 @@ exports.removeUserFromCourse = async (courseId, userId) => {
     return course;
 };
 
+/*
+exports.removeUserFromCourse = async (id) => {
+    let result = await Course.findById(id);
+    result = result.toJSON();
+    return result;
+};
+*/
 
 exports.findById = async (id) => {
     let result = await Course.findById(id);
@@ -60,7 +72,7 @@ exports.list = async (perPage, page) => {
         Course.find()
             .limit(perPage)
             .skip(perPage * page)
-            .populate('students').populate('instructors')
+            .populate('users')
             .exec(function (err, courses) {
                 if (err) {
                     reject(err);
