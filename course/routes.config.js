@@ -52,7 +52,11 @@ exports.routesConfig = function (app) {
     ]);
 
     //Task
-
+    app.get('courses/task/:taskId', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        TasksController.getById
+    ]);
     app.patch('/courses/task/', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),

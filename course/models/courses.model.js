@@ -10,10 +10,17 @@ const courseSchema = new Schema({
     },
     instructors: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
     students: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
-    successors: [{type: Schema.Types.ObjectId, ref:'Courses'}],
-    tasks: [{type: Schema.Types.ObjectId, ref:'Tasks'}]
+    successors: [{ type: Schema.Types.ObjectId, ref: 'Courses' }],
+    tasks: [{ type: Schema.Types.ObjectId, ref: 'Tasks' }]
 });
 
+courseSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+courseSchema.set('toJSON', {
+    virtuals: true
+});
 
 courseSchema.findById = function (cb) {
     return this.model('Courses').find({ id: this.id }, cb);
@@ -22,7 +29,7 @@ courseSchema.findById = function (cb) {
 const Course = mongoose.model('Courses', courseSchema);
 
 
-exports.addUserToCourse = async (courseId,userId) => {
+exports.addUserToCourse = async (courseId, userId) => {
     //TODO
     let course = await Course.findById(courseId);
     let user = await UserModel.findById(userId);

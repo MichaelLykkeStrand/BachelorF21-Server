@@ -16,13 +16,12 @@ exports.minimumPermissionLevelRequired = (required_permission_level) => {
 };
 
 exports.onlySameUserOrAdminCanDoThisAction = (req, res, next) => {
-
     let user_permission_level = parseInt(req.jwt.permissionLevel);
     let userId = req.jwt.userId;
     //TODO
     //UNSURE ABOUT THIS, userId of requester should be contained in JWT, so comparison to request param "userId" seems redundant?
     //Might require a new export to be used in different scenario?
-    if (req.params && req.params.userId && userId === req.params.userId) {
+    if (req.jwt.userId) {
         return next();
     } else {
         if (user_permission_level & ADMIN_PERMISSION) {
