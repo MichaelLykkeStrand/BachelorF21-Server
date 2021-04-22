@@ -1,0 +1,1 @@
+const ProgressModel = require('../models/progress.model');

@@ -1,6 +1,7 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
+//TODO Last active time
 const progressSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId, ref: 'Users',
