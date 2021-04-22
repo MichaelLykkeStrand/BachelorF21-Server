@@ -34,9 +34,17 @@ const Progress = mongoose.model('Progress', progressSchema);
 
 
 exports.findByUserId = async (id) => {
-    let result = await User.find({ user: id });
+    let result = await Progress.find({ user: id });
     result = result.toJSON();
     return result;
 };
+
+exports.findByTaskId = async (id) => {
+    let result = await Progress.find({ task: id });
+    result = result.toJSON();
+    return result;
+};
+
+
 
 
