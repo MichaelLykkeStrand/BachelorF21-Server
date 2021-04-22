@@ -16,7 +16,13 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
-    completedBy: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
+    completedBy:{
+        type: Map,
+        of: new Schema({
+            user: {type: Schema.Types.ObjectId, ref: 'Users'},
+            timeUsed: Number //Seconds
+        })
+    } 
 });
 
 const Task = mongoose.model('Tasks', taskSchema);
