@@ -9,6 +9,7 @@ const EVERYONE = config.permissionLevels.EVERYONE;
 
 exports.routesConfig = function (app) {
     app.post('/progress', [
-        ValidationMiddleware.validJWTNeeded
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT)
     ]);
 };

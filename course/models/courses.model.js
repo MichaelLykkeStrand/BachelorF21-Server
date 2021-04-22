@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const courseSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     instructors: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
     students: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
