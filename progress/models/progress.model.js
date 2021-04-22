@@ -2,12 +2,12 @@ const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
 const progressSchema = new Schema({
-    userId: {
-        type: String,
+    user: {
+        type: Schema.Types.ObjectId, ref: 'Users',
         required: true
     },
-    moduleId: {
-        type: String,
+    task: {
+        type: Schema.Types.ObjectId, ref: 'Tasks',
         required: true
     },
     completed: {
