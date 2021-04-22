@@ -16,19 +16,14 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
-    completedBy:{
-        type: Map,
-        of: new Schema({
-            user: {type: Schema.Types.ObjectId, ref: 'Users'},
-            timeUsed: Number //Seconds
-        })
-    } 
+    assignedTo: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
+    completedBy: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
 });
 
 const Task = mongoose.model('Tasks', taskSchema);
 
 taskSchema.findById = function (cb) {
-    return this.model('Tasks').find({ id: this.id }, cb).populate('completedBy');
+    return this.model('Tasks').find({ id: this.id }, cb).populate('completedBy').populate('assignedTo');
 };
 
 exports.findById = async (id) => {
