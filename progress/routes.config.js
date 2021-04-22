@@ -12,4 +12,9 @@ exports.routesConfig = function (app) {
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(STUDENT)
     ]);
+
+    app.get('/progress/time', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT)
+    ]);
 };
