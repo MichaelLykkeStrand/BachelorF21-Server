@@ -9,7 +9,7 @@ const STUDENT = config.permissionLevels.STUDENT;
 const EVERYONE = config.permissionLevels.EVERYONE;
 
 exports.routesConfig = function (app) {
-    app.post('/progress', [
+    app.post('/progress/task', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(STUDENT),
         ProgressController.getProgressByTaskIDAndUserID
