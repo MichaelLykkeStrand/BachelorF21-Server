@@ -52,6 +52,12 @@ exports.findByTaskIdAndUserID = async (userid, taskid)=>{
     return result;
 }
 
+exports.findById = async (id) => {
+    let result = await Progress.find({ task: id });
+    result = result.toJSON();
+    return result;
+};
+
 
 
 
