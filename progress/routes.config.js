@@ -1,5 +1,6 @@
 const PermissionMiddleware = require('../common/middlewares/auth.permission.middleware');
 const ValidationMiddleware = require('../common/middlewares/auth.validation.middleware');
+const ProgressController = require('./controller/progress.controller');
 const config = require('../common/config/env.config');
 
 const ADMIN = config.permissionLevels.ADMIN;
@@ -10,7 +11,8 @@ const EVERYONE = config.permissionLevels.EVERYONE;
 exports.routesConfig = function (app) {
     app.post('/progress', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT)
+        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT),
+        ProgressController.getProgressByTaskIDAndUserID
     ]);
 
     app.get('/progress/time', [
