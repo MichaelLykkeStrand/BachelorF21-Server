@@ -12,7 +12,7 @@ exports.routesConfig = function (app) {
     app.post('/progress/task', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(STUDENT),
-        ProgressController.getProgressByTaskIDAndUserID
+        ProgressController.getProgressByTaskIDAndUserID //Change to only use TASKID
     ]);
 
     app.get('/progress/time', [
