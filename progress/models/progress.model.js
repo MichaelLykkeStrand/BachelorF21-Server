@@ -26,7 +26,7 @@ progressSchema.virtual('id').get(function () {
 });
 
 // Ensure virtual fields are serialised.
-userSchema.set('toJSON', {
+progressSchema.set('toJSON', {
     virtuals: true
 });
 
