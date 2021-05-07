@@ -29,7 +29,7 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         UsersController.getCoursesById
     ]);
-    app.get('/users/course', [
+    app.get('/usersCourses', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,

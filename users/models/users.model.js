@@ -26,10 +26,7 @@ const userSchema = new Schema({
         type: Number,
         default: 1
     },
-    courses: {
-        type: Array,
-        select: false,
-    }
+    courses: [{ type: Schema.Types.ObjectId, ref: 'Courses' }]
 });
 
 userSchema.virtual('id').get(function () {
