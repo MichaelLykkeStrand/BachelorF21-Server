@@ -1,5 +1,3 @@
-
-
 const config = require('../../common/config/env.config');
 const ADMIN_PERMISSION = config.permissionLevels.ADMIN;
 
