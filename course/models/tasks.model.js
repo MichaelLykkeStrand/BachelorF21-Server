@@ -1,5 +1,6 @@
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const UserModel = require('../../users/models/users.model');
+const CourseModel = require('../../course/models/courses.model');
 
 const Schema = mongoose.Schema;
 
@@ -48,12 +49,19 @@ exports.patchTask = async (id,taskData) => {
     }, taskData);
 }
 
-exports.createTask = (taskData) => {
-    const task = new Task(taskData);
-    return task.save().then((result) => {
+exports.createTask = async (taskData) => {
+    let response;
+    let course = await CourseModel.findById(taskData.courseID)
+    let task = new Task(taskData);
+    task.save().then((result) => {
+        response = result;
         console.log(result);
-        return result;
     });
+    let courseData = {};
+    courseData.tasks = course.tasks;
+    console.log(courseData);
+    CourseModel.patchCourse(taskData.courseID,course)
+    return response
 };
 
 

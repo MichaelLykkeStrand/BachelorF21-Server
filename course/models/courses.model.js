@@ -81,6 +81,7 @@ exports.list = async (perPage, page) => {
 };
 
 exports.patchCourse = (id, courseData) => {
+    console.log("Course patch: "+ courseData)
     return Course.findOneAndUpdate({
         _id: id
     }, courseData);
