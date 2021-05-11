@@ -2,6 +2,7 @@ const config = require('../../common/config/env.config');
 const ADMIN_PERMISSION = config.permissionLevels.ADMIN;
 
 exports.minimumPermissionLevelRequired = (required_permission_level) => {
+    console.log("called")
     return (req, res, next) => {
         let user_permission_level = parseInt(req.jwt.permissionLevel);
         let userId = req.jwt.userId;

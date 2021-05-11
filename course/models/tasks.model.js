@@ -42,4 +42,11 @@ exports.patchStatus = async (id, userId) => {
     return task;
 }
 
+exports.patchTask = async (id,taskData) => {
+    return Task.findOneAndUpdate({
+        _id: id
+    }, taskData);
+
+}
+
 

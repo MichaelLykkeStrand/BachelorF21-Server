@@ -1,7 +1,8 @@
 const TaskModel = require('../models/tasks.model');
 
 exports.patchById = (req, res) => {
-    TaskModel.patchTask(req.body.taskId, req.body.userId)
+    console.log(Object.getOwnPropertyNames(req.body))
+    TaskModel.patchTask(req.body._id, req.body)
         .then((result) => {
             res.status(204).send({});
         });
