@@ -13,3 +13,13 @@ exports.getById = (req, res) => {
             res.status(200).send(result);
         });
 };
+
+exports.insert = (req, res) => {
+    console.log(req.body);
+    TaskModel.createTask(req.body)
+        .then((result) => {
+            res.status(201).send({result}); 
+        }).catch((error => {
+            res.status(400).send(error);
+        }));
+};

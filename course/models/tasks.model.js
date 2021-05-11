@@ -46,7 +46,14 @@ exports.patchTask = async (id,taskData) => {
     return Task.findOneAndUpdate({
         _id: id
     }, taskData);
-
 }
+
+exports.createTask = (taskData) => {
+    const task = new Task(taskData);
+    return task.save().then((result) => {
+        console.log(result);
+        return result;
+    });
+};
 
 
