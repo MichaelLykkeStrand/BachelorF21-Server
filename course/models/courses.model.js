@@ -85,16 +85,6 @@ exports.patchCourse = async (id, courseData) => {
     return Course.findOneAndUpdate({
         _id: id
     }, courseData);
-
-    return new Promise((resolve, reject) => {
-        Course.deleteMany({ _id: courseId }, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(err);
-            }
-        });
-    });
 };
 
 exports.removeById = (courseId) => {
