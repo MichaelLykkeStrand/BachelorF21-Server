@@ -72,8 +72,18 @@ exports.removeTaskById = async (id) => {
     let course = await CourseModel.findById(task.courseID)
     let courseData = {};
     courseData.tasks = course.tasks;
+    console.log("OLD data: "+course.tasks)
 
-    await CourseModel.patchCourse(task.courseID,course)
+    for( var i = 0; i < courseData.tasks.length; i++){ 
+        console.log(courseData.tasks[i]._id+" != "+task._id)
+        if ( courseData.tasks[i]._id+"" == task._id+"") { 
+            console.log(courseData.tasks[i]._id+" == "+task._id)
+            courseData.tasks.splice(i, 1); 
+        }
+    }
+    console.log("New data: "+courseData.tasks)
+
+    await CourseModel.patchCourse(task.courseID,courseData)
 
     return new Promise((resolve, reject) => {
         Task.deleteMany({_id: taskData._id}, (err) => {
