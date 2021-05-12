@@ -88,13 +88,13 @@ exports.list = async (perPage, page) => {
     });
 };
 
-exports.patchUser = (id, userData) => {
+exports.patchUser = async (id, userData) => {
     return User.findOneAndUpdate({
         _id: id
     }, userData);
 };
 
-exports.removeById = (userId) => {
+exports.removeById = async (userId) => {
     return new Promise((resolve, reject) => {
         User.deleteMany({ _id: userId }, (err) => {
             if (err) {

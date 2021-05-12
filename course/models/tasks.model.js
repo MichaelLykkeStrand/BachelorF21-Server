@@ -5,6 +5,7 @@ const CourseModel = require('../../course/models/courses.model');
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
+    courseID: { type: Schema.Types.ObjectId, ref: 'Courses' },
     name: {
         type: String,
         required: true
@@ -17,7 +18,6 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
-    assignedTo: [{ type: Schema.Types.ObjectId, ref: 'Users' }],
     completedBy: [{ type: Schema.Types.ObjectId, ref: 'Users' }]
 });
 
