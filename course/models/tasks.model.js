@@ -89,16 +89,13 @@ exports.removeTaskById = async (id) => {
 
     }
 
-
-
-       await Task.deleteMany({_id: taskData._id}, (err) => {
-            if (err) {
+    await Task.deleteMany({_id: taskData._id}, (err) => {
+        if (err) {
                 reject(err);
-            } else {
+        } else {
                 resolve(err);
-            }
-        });
-
+        }
+    });
 
 };
 
