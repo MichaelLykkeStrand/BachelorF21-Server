@@ -23,3 +23,13 @@ exports.insert = (req, res) => {
             res.status(400).send(error);
         }));
 };
+
+exports.removeById = (req, res) => {
+    console.log("Remove called!")
+    TaskModel.removeTaskById(req.params.taskId)
+        .then((result) => {
+            res.status(201).send({result}); 
+        }).catch((error => {
+            res.status(400).send(error);
+        }));
+};

@@ -57,6 +57,11 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
         TasksController.getById
     ]);
+    app.delete('/coursesTask/:taskId', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
+        TasksController.removeById
+    ]);
     app.post('/coursesTask/', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),

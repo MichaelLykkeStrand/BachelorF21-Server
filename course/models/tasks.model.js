@@ -66,3 +66,25 @@ exports.createTask = async (taskData) => {
 };
 
 
+exports.removeTaskById = async (id) => {
+    let task = await this.findById(id);
+    console.log(task);
+    let course = await CourseModel.findById(task.courseID)
+    let courseData = {};
+    courseData.tasks = course.tasks;
+
+    await CourseModel.patchCourse(task.courseID,course)
+
+    return new Promise((resolve, reject) => {
+        Task.deleteMany({_id: taskData._id}, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(err);
+            }
+        });
+    });
+
+};
+
+
