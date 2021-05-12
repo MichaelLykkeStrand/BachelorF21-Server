@@ -76,7 +76,7 @@ exports.removeTaskById = async (id) => {
 
     for( var i = 0; i < courseData.tasks.length; i++){ 
         console.log(courseData.tasks[i]._id+" != "+task._id)
-        if ( courseData.tasks[i]._id+"" == task._id+"") { 
+        if ( courseData.tasks[i]._id+"" == task._id+"") { //Convert to string, otherwise it can't compare?
             console.log(courseData.tasks[i]._id+" == "+task._id)
             courseData.tasks.splice(i, 1); 
         }
