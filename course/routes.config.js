@@ -72,4 +72,10 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
         TasksController.patchById    
     ]);
+    app.post('/coursesTaskCompleted/', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        TasksController.completeById    
+    ]);
+
 };
