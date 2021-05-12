@@ -59,7 +59,8 @@ exports.createTask = async (taskData) => {
     });
     let courseData = {};
     courseData.tasks = course.tasks;
-    console.log(courseData);
+    courseData.tasks.push(task._id);
+    console.log("Tasks: "+courseData.tasks);
     CourseModel.patchCourse(taskData.courseID,course)
     return response
 };

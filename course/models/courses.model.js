@@ -80,11 +80,21 @@ exports.list = async (perPage, page) => {
     });
 };
 
-exports.patchCourse = (id, courseData) => {
-    console.log("Course patch: "+ courseData)
+exports.patchCourse = async (id, courseData) => {
+    console.log("Course patch: "+ courseData.tasks)
     return Course.findOneAndUpdate({
         _id: id
     }, courseData);
+
+    return new Promise((resolve, reject) => {
+        Course.deleteMany({ _id: courseId }, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(err);
+            }
+        });
+    });
 };
 
 exports.removeById = (courseId) => {
