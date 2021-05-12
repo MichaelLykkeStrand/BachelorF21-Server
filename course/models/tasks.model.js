@@ -69,31 +69,36 @@ exports.createTask = async (taskData) => {
 exports.removeTaskById = async (id) => {
     let task = await this.findById(id);
     console.log(task);
-    let course = await CourseModel.findById(task.courseID)
-    let courseData = {};
-    courseData.tasks = course.tasks;
-    console.log("OLD data: "+course.tasks)
-
-    for( var i = 0; i < courseData.tasks.length; i++){ 
-        console.log(courseData.tasks[i]._id+" != "+task._id)
-        if ( courseData.tasks[i]._id+"" == task._id+"") { //Convert to string, otherwise it can't compare?
-            console.log(courseData.tasks[i]._id+" == "+task._id)
-            courseData.tasks.splice(i, 1); 
+    try{
+        let course = await CourseModel.findById(task.courseID)
+        let courseData = {};
+        courseData.tasks = course.tasks;
+        console.log("OLD data: "+course.tasks)
+    
+        for( var i = 0; i < courseData.tasks.length; i++){ 
+            console.log(courseData.tasks[i]._id+" != "+task._id)
+            if ( courseData.tasks[i]._id+"" == task._id+"") { //Convert to string, otherwise it can't compare?
+                console.log(courseData.tasks[i]._id+" == "+task._id)
+                courseData.tasks.splice(i, 1); 
+            }
         }
+        console.log("New data: "+courseData.tasks)
+    
+        await CourseModel.patchCourse(task.courseID,courseData)
+    } catch{
+
     }
-    console.log("New data: "+courseData.tasks)
 
-    await CourseModel.patchCourse(task.courseID,courseData)
 
-    return new Promise((resolve, reject) => {
-        Task.deleteMany({_id: taskData._id}, (err) => {
+
+       await Task.deleteMany({_id: taskData._id}, (err) => {
             if (err) {
                 reject(err);
             } else {
                 resolve(err);
             }
         });
-    });
+
 
 };
 
