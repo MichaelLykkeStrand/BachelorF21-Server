@@ -24,11 +24,13 @@ const taskSchema = new Schema({
 const Task = mongoose.model('Tasks', taskSchema);
 
 taskSchema.findById = function (cb) {
+
     return this.model('Tasks').find({ id: this.id }, cb).populate('completedBy').populate('assignedTo');
 };
 
 exports.findById = async (id) => {
-    let result = await Task.findById(id);
+    console.log("Finding task!")
+    let result = await Task.findById(id).populate('completedBy');
     result = result.toJSON();
     return result;
 };
@@ -87,8 +89,7 @@ exports.removeTaskById = async (id) => {
         await CourseModel.patchCourse(task.courseID,courseData)
     } catch{
 
-    }
-
+    } finally{
     //TODO
     await Task.deleteMany({_id: taskData._id}, (err) => {
         if (err) {
@@ -97,6 +98,7 @@ exports.removeTaskById = async (id) => {
                 resolve(err);
         }
     });
+    }
 
 };
 
