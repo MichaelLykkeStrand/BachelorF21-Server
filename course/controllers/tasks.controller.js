@@ -7,6 +7,17 @@ exports.patchById = (req, res) => {
             res.status(204).send({});
         });
 };
+
+exports.completeById = (req, res) => {
+    TaskModel.findById(req.body._id).then(r => {
+        if(!r.completedBy.includes(req.jwt.userId)){
+            TaskModel.patchStatus(req.body._id, req.jwt.userId)    
+        }
+    }).then((result) => {
+        res.status(204).send({});
+    });
+}
+
 exports.getById = (req, res) => {
     TaskModel.findById(req.params.taskId)
         .then((result) => {
