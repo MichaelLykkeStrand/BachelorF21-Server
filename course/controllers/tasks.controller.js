@@ -10,8 +10,11 @@ exports.patchById = (req, res) => {
 
 exports.completeById = (req, res) => {
     TaskModel.findById(req.body._id).then(r => {
-        if(!r.completedBy.includes(req.jwt.userId)){
-            TaskModel.patchStatus(req.body._id, req.jwt.userId)    
+        let hasAlreadyCompleted = r.completedBy.some(function (user){
+            return user._id.equals(req.jwt.userId);
+        });
+        if(!hasAlreadyCompleted){
+            TaskModel.patchStatus(req.body._id, req.jwt.userId) 
         }
     }).then((result) => {
         res.status(204).send({});

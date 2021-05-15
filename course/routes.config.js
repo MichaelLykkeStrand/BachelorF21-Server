@@ -74,7 +74,7 @@ exports.routesConfig = function (app) {
     ]);
     app.post('/coursesTaskCompleted/', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(EVERYONE),
+        PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         TasksController.completeById    
     ]);
 

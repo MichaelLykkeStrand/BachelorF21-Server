@@ -35,6 +35,13 @@ exports.findById = async (id) => {
     return result;
 };
 
+exports.findByIdNotPopulated = async (id) => {
+    console.log("Finding task!")
+    let result = await Task.findById(id);
+    result = result.toJSON();
+    return result;
+};
+
 exports.patchStatus = async (id, userId) => {
     let task = await Task.findById(id);
     let user = await UserModel.findById(userId);
