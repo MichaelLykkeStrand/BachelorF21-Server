@@ -33,3 +33,20 @@ exports.removeById = (req, res) => {
             res.status(400).send(error);
         }));
 };
+
+
+exports.patchCompletionById = (req, res) => {
+    console.log(Object.getOwnPropertyNames(req.body))
+    if(req.body.userId){
+        TaskModel.patchStatus(req.body.taskId, req.body.userId)
+        .then((result) => {
+            res.status(204).send({});
+        });
+    }else{
+        TaskModel.patchStatus(req.body.taskId, req.jwt.userId)
+        .then((result) => {
+            res.status(204).send({});
+        });
+    }
+
+};

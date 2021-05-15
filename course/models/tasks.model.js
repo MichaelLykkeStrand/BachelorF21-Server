@@ -36,6 +36,7 @@ exports.findById = async (id) => {
 };
 
 exports.patchStatus = async (id, userId) => {
+    console.log(id);
     let task = await Task.findById(id);
     let user = await UserModel.findById(userId);
 
