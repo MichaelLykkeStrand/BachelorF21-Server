@@ -11,11 +11,11 @@ const progressSchema = new Schema({
         type: Schema.Types.ObjectId, ref: 'Tasks',
         required: true
     },
-    completed: {
-        type: Boolean,
-        default: false
-    },
     timeUsed:{
+        type: Number,
+        default: 0
+    },
+    timesPaused:{
         type: Number,
         default: 0
     }
@@ -46,11 +46,27 @@ exports.findByTaskId = async (id) => {
     return result;
 };
 
+exports.updateByTaskId = async (progressData) => {
+    let result = await Progress.find({ 
+        task: progressData.task,
+        user: progressData.user
+    });
+    result.timeUsed += progressData.timeUsed;
+    result.timesPaused += progressData.timesPaused;
+    Progress.findOneAndUpdate({
+        task: progressData.task,
+        user: progressData.user
+    }, result);
+
+    result = result.toJSON();
+    return result;
+};
+
 exports.findByTaskIdAndUserID = async (userid, taskid)=>{
     let result = await Progress.findOne({user: userid, task: taskid });
     result = result.toJSON();
     return result;
-}
+};
 
 exports.findById = async (id) => {
     let result = await Progress.find({ task: id });
