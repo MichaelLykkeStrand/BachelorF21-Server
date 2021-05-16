@@ -14,3 +14,15 @@ exports.updateByTaskId = (req, res) => {
             res.status(200).send(result);
         });
 };
+
+exports.findByTask = (req, res) => {
+    ProgressModel.findByTask(req.params.taskId).then((result) => {
+        res.status(200).send(result);
+    });
+}
+
+exports.findByUser = (req, res) => {
+    ProgressModel.findByTask(req.params.userId).then((result) => {
+        res.status(200).send(result);
+    });
+}
