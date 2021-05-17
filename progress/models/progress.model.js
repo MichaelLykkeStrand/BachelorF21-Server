@@ -46,7 +46,8 @@ exports.findByTaskId = async (id) => {
     return result;
 };
 
-exports.findByTaskIdAndUserID = async (userid, taskid)=>{
+exports.findByTaskIdAndUserID = async (taskid,userid)=>{
+    console.log("Finding progress for: Task="+taskid+" User="+ userid);
     let result = await Progress.findOne({user: userid, task: taskid });
     result = result.toJSON();
     return result;
