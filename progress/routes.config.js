@@ -16,8 +16,15 @@ exports.routesConfig = function (app) {
         ProgressController.getProgressByTaskIDAndUserID //Change to only use TASKID
     ]);
 
-    app.get('/progress/time', [
+    app.get('/progress/userTime/', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT)
+        PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
+        ProgressController.findByTask
+    ]);
+
+    app.get('/progress/taskTime/', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
+        ProgressController.findByUser
     ]);
 };
