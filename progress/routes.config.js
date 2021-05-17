@@ -13,7 +13,7 @@ exports.routesConfig = function (app) {
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(STUDENT),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
-        ProgressController.getProgressByTaskIDAndUserID //Change to only use TASKID
+        ProgressController.getProgressByTaskIDAndUserID 
     ]);
 
     app.get('/progress/userTime/', [
