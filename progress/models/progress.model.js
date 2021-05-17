@@ -68,19 +68,24 @@ exports.findByTaskIdAndUserID = async (taskid,userid)=>{
 };
 
 exports.updateByTaskId = async (progressData) => {
-    let result = await Progress.find({ 
-        task: progressData.task,
-        user: progressData.user
-    });
-    result.timeUsed += progressData.timeUsed;
-    result.timesPaused += progressData.timesPaused;
-    Progress.findOneAndUpdate({
-        task: progressData.task,
-        user: progressData.user
-    }, result);
+    try {
+        let result = await Progress.find({ 
+            task: progressData.task,
+            user: progressData.user
+        });
+        result.timeUsed += progressData.timeUsed;
+        result.timesPaused += progressData.timesPaused;
+        Progress.findOneAndUpdate({
+            task: progressData.task,
+            user: progressData.user
+        }, result);
 
-    result = result.toJSON();
-    return result;
+        result = result.toJSON();
+        return result;
+    }
+    catch (error) {
+        return error;
+    }
 };
 
 exports.findById = async (id) => {
