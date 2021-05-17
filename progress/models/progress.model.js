@@ -35,28 +35,47 @@ const Progress = mongoose.model('Progress', progressSchema);
 
 
 exports.findByUserId = async (id) => {
+    try {
     let result = await Progress.find({ user: id });
     result = result.toJSON();
     return result;
+    }catch (error) {
+        return error;
+    }
 };
 
 exports.findByTaskId = async (id) => {
-    let result = await Progress.find({ task: id });
-    result = result.toJSON();
-    return result;
+    try {
+        let result = await Progress.find({ task: id });
+        result = result.toJSON();
+        return result;
+    } catch (error) {
+        return error;
+    }
+
 };
 
 exports.findByTaskIdAndUserID = async (taskid,userid)=>{
+    try {
     console.log("Finding progress for: Task="+taskid+" User="+ userid);
     let result = await Progress.findOne({user: userid, task: taskid });
     result = result.toJSON();
     return result;
+    }
+    catch (error) {
+        return error;
+    }
 }
 
 exports.findById = async (id) => {
+    try {
     let result = await Progress.find({ task: id });
     result = result.toJSON();
     return result;
+    }
+    catch (error) {
+        return error;
+    }
 };
 
 
