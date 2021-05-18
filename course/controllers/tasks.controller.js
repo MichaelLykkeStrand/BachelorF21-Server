@@ -27,8 +27,8 @@ exports.completeById = async (req, res) => {
                 }
 
             }
-            CourseModel.addUserToCourse(course._id, req.body.userId).then((result)=>{
-                res.status(200).send(result);
+            course.successors.forEach(element => {
+                CourseModel.addStudentToCourse(element._id, req.body.userId);    
             });
         }
     }).then((result) => {

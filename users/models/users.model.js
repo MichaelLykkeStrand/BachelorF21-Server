@@ -66,6 +66,13 @@ exports.findCoursesById = async (id) =>{
     return result;
 };
 
+exports.addToCourse = async (id, courseId) =>{
+    let user = await User.findById(id);
+    user.courses.push(courseId);
+    user.save();
+    return user;
+};
+
 exports.createUser = (userData) => {
     const user = new User(userData);
     return user.save().then((result) => {
