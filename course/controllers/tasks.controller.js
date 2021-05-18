@@ -1,4 +1,5 @@
 const TaskModel = require('../models/tasks.model');
+const TaskModel = require('../models/courses.model');
 
 exports.patchById = (req, res) => {
     console.log(Object.getOwnPropertyNames(req.body))
@@ -14,7 +15,20 @@ exports.completeById = (req, res) => {
             return user._id.equals(req.jwt.userId);
         });
         if(!hasAlreadyCompleted){
-            TaskModel.patchStatus(req.body._id, req.jwt.userId) 
+            let t = TaskModel.patchStatus(req.body._id, req.body.userId);
+            let course = CoursesController.getById(t.courseID);
+            for(var i = 0; i < course.tasks.length; i++){
+                let hasCompleted = course.tasks[i].completedBy.some(function (user){
+                    return user._id.equals(req.body.userId);
+                });
+                if(!hasCompleted){
+                    return;
+                }
+
+            }
+            CourseModel.addUserToCourse(course._id, req.body.userId).then((result)=>{
+                res.status(200).send(result);
+            });
         }
     }).then((result) => {
         res.status(204).send({});

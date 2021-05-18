@@ -32,6 +32,9 @@ exports.validJWTNeeded = (req, res, next) => {
                 return res.status(401).send();
             } else {
                 req.jwt = jwt.verify(authorization[1], secret);
+                if(req.body.userId == undefined){
+                    req.body.userId = req.jwt.userId;
+                }
                 return next();
             }
 

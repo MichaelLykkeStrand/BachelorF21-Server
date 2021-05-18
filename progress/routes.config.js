@@ -27,4 +27,11 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.minimumPermissionLevelRequired(INSTRUCTOR),
         ProgressController.findByUser
     ]);
+
+    app.post('/progress/userTaskTime/', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(STUDENT),
+        PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+        ProgressController.updateByTaskId
+    ]);
 };
