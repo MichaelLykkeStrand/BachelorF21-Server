@@ -1,5 +1,5 @@
 const TaskModel = require('../models/tasks.model');
-const TaskModel = require('../models/courses.model');
+const CourseModel = require('../models/courses.model');
 
 exports.patchById = (req, res) => {
     console.log(Object.getOwnPropertyNames(req.body))
@@ -9,18 +9,19 @@ exports.patchById = (req, res) => {
         });
 };
 
-exports.completeById = (req, res) => {
-    TaskModel.findById(req.body._id).then(r => {
+exports.completeById = async (req, res) => {
+    TaskModel.findById(req.body._id).then(async r => {
         let hasAlreadyCompleted = r.completedBy.some(function (user){
             return user._id.equals(req.jwt.userId);
         });
         if(!hasAlreadyCompleted){
-            let t = TaskModel.patchStatus(req.body._id, req.body.userId);
-            let course = CoursesController.getById(t.courseID);
-            for(var i = 0; i < course.tasks.length; i++){
-                let hasCompleted = course.tasks[i].completedBy.some(function (user){
-                    return user._id.equals(req.body.userId);
-                });
+            let t = await TaskModel.patchStatus(req.body._id, req.body.userId);
+            let course = await CourseModel.findAsObjectById(t.courseID);
+            let courseData = {};
+            courseData.tasks = course.tasks;
+            for(var i = 0; i < courseData.tasks.length; i++){
+                console.log(courseData.tasks[i]);
+                let hasCompleted = courseData.tasks[i].completedBy.includes(req.body.userId);
                 if(!hasCompleted){
                     return;
                 }

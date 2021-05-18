@@ -57,6 +57,11 @@ exports.findById = async (id) => {
     return result;
 };
 
+exports.findAsObjectById = async (id) => {
+    let result = await Course.findById(id).populate('tasks');
+    return result;
+};
+
 exports.createCourse = (courseData) => {
     const course = new Course(courseData);
     return course.save().then((result) => {
