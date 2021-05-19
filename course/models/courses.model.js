@@ -30,22 +30,23 @@ courseSchema.findById = function (cb) {
 const Course = mongoose.model('Courses', courseSchema);
 
 
-exports.addUserToCourse = async (courseId, userId) => {
+exports.addStudentToCourse = async (courseId, userId) => {
     //TODO
     let course = await Course.findById(courseId);
     let user = await UserModel.findById(userId);
 
-    course.users.push(user);
+    course.students.push(user);
+    UserModel.addToCourse(userId, courseId);
     course.save();
 
     return course;
 };
 
-exports.removeUserFromCourse = async (courseId, userId) => {
+exports.removeStudentFromCourse = async (courseId, userId) => {
     //TODO
-    let course = await Course.findById(courseId);
+    let course = await Course.findById(courseId).populate('students');
     let user = await UserModel.findById(userId);
-    course.users.pull(user);
+    course.students.pull(user);
     course.save();
     return course;
 };
@@ -54,6 +55,11 @@ exports.removeUserFromCourse = async (courseId, userId) => {
 exports.findById = async (id) => {
     let result = await Course.findById(id);
     result = result.toJSON();
+    return result;
+};
+
+exports.findAsObjectById = async (id) => {
+    let result = await Course.findById(id).populate('students').populate('tasks');
     return result;
 };
 

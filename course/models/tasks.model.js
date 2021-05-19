@@ -43,16 +43,21 @@ exports.findByIdNotPopulated = async (id) => {
 };
 
 exports.patchStatus = async (id, userId) => {
-    let task = await Task.findById(id);
-    let user = await UserModel.findById(userId);
+    try {
+        let task = await Task.findById(id);
+        let user = await UserModel.findById(userId);
 
-    task.completedBy.push(user);
-    task.save();
+        task.completedBy.push(user);
+        task.save();
 
-    return task;
+        return task;
+    } catch (error) {
+        return error
+    }
+
 }
 
-exports.patchTask = async (id,taskData) => {
+exports.patchTask = async (id, taskData) => {
     return Task.findOneAndUpdate({
         _id: id
     }, taskData);
@@ -69,8 +74,8 @@ exports.createTask = async (taskData) => {
     let courseData = {};
     courseData.tasks = course.tasks;
     courseData.tasks.push(task._id);
-    console.log("Tasks: "+courseData.tasks);
-    CourseModel.patchCourse(taskData.courseID,course);
+    console.log("Tasks: " + courseData.tasks);
+    CourseModel.patchCourse(taskData.courseID, course);
     return response;
 };
 
@@ -78,33 +83,33 @@ exports.createTask = async (taskData) => {
 exports.removeTaskById = async (id) => {
     let task = await this.findById(id);
     console.log(task);
-    try{
+    try {
         let course = await CourseModel.findById(task.courseID)
         let courseData = {};
         courseData.tasks = course.tasks;
-        console.log("OLD data: "+course.tasks)
-    
-        for( var i = 0; i < courseData.tasks.length; i++){ 
-            console.log(courseData.tasks[i]._id+" != "+task._id)
-            if ( courseData.tasks[i]._id+"" == task._id+"") { //Convert to string, otherwise it can't compare?
-                console.log(courseData.tasks[i]._id+" == "+task._id)
-                courseData.tasks.splice(i, 1); 
+        console.log("OLD data: " + course.tasks)
+
+        for (var i = 0; i < courseData.tasks.length; i++) {
+            console.log(courseData.tasks[i]._id + " != " + task._id)
+            if (courseData.tasks[i]._id + "" == task._id + "") { //Convert to string, otherwise it can't compare?
+                console.log(courseData.tasks[i]._id + " == " + task._id)
+                courseData.tasks.splice(i, 1);
             }
         }
-        console.log("New data: "+courseData.tasks)
-    
-        await CourseModel.patchCourse(task.courseID,courseData)
-    } catch{
+        console.log("New data: " + courseData.tasks)
 
-    } finally{
-    //TODO
-    await Task.deleteMany({_id: taskData._id}, (err) => {
-        if (err) {
+        await CourseModel.patchCourse(task.courseID, courseData)
+    } catch {
+
+    } finally {
+        //TODO
+        await Task.deleteMany({ _id: taskData._id }, (err) => {
+            if (err) {
                 reject(err);
-        } else {
+            } else {
                 resolve(err);
-        }
-    });
+            }
+        });
     }
 
 };

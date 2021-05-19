@@ -9,6 +9,6 @@ RUN npm install --production
 
 COPY . .
 
-EXPOSE 443
+EXPOSE 3600
 
 CMD [ "node", "main.js" ]
